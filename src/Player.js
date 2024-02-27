@@ -1,16 +1,10 @@
-// function takeTurnComputer(enemyBoard, attackedSpaces) {
-//   let coords = generateRandomMove(attackedSpaces);
-
-//   enemyBoard.receiveAttack(y, x);
-// }
-
 function generateRandomMove(attackedSpaces) {
-  let potentialYCoord = Math.floor(Math.random() * 10);
-  let potentialXCoord = Math.floor(Math.random() * 10);
+  let potentialYCoord = Math.floor(Math.random() * 9);
+  let potentialXCoord = Math.floor(Math.random() * 9);
 
   while (attackedSpaces.has([potentialYCoord, potentialXCoord])) {
-    let potentialYCoord = Math.floor(Math.random() * 10);
-    let potentialXCoord = Math.floor(Math.random() * 10);
+    let potentialYCoord = Math.floor(Math.random() * 9);
+    let potentialXCoord = Math.floor(Math.random() * 9);
   }
 
   return [potentialYCoord, potentialXCoord];
