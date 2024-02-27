@@ -57,6 +57,15 @@ describe("Gameboard", () => {
       expect(state[1][1]).toBeUndefined();
       expect(state[1][2]).toBeUndefined();
     });
+
+    test("should be able to place multiple ships", () => {
+      board.placeShip(Ship(2), 2, 5, "V");
+      board.placeShip(Ship(2), 7, 6, "V");
+      board.placeShip(Ship(3), 1, 7, "V");
+      board.placeShip(Ship(4), 6, 5, "H");
+
+      expect(board.numShipsAlive()).toBe(4);
+    });
   });
 
   describe("populate", () => {
@@ -72,7 +81,6 @@ describe("Gameboard", () => {
       expect(board.numShipsAlive()).toBe(0);
 
       board.populate(ships);
-      console.log(board.getBoard());
 
       expect(board.numShipsAlive()).toBe(5);
     });
