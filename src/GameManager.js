@@ -16,6 +16,11 @@ function autoGame() {
   let boardOne = Gameboard();
   let boardTwo = Gameboard();
 
+  const standardShips = [Ship(2), Ship(2), Ship(3), Ship(4), Ship(5)];
+
+  boardOne.populate([...standardShips]);
+  boardTwo.populate([...standardShips]);
+
   let playerOne = AIPlayer(boardTwo);
   let playerTwo = AIPlayer(boardOne);
 

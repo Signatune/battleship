@@ -6,12 +6,12 @@ describe("GameBoardManager", () => {
 
     game.play();
 
-    // expect(game.status()).toBeTruthy();
+    expect(game.status()).toBeTruthy();
   });
 
   test("autoGame status is null before game is played", () => {
     let game = autoGame();
 
-    // expect(game.status()).toBeUndefined();
+    expect(game.status()).toBeFalsy();
   });
 });
