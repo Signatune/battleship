@@ -11,7 +11,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "New Project",
+      title: "Battleship",
     }),
   ],
   module: {
