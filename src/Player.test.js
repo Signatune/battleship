@@ -8,7 +8,7 @@ describe("AIPlayer", () => {
 
     beforeEach(() => {
       boardMock.receiveAttack = jest.fn(() => {});
-      aiPlayer = Player.AIPlayer(boardMock);
+      aiPlayer = Player.aiPlayer(boardMock);
     });
 
     test("will attack random coordinates on enemy board", () => {

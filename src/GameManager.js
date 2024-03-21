@@ -1,16 +1,52 @@
-import { AIPlayer, Player } from "./Player";
+import { aiPlayer, Player } from "./Player";
 import Gameboard from "./Gameboard";
 import Ship from "./Ship";
 
-// function singlePlayerGame() {
-//   let humanBoard = Gameboard();
-//   let AIBoard = Gameboard();
+function isGameOver(boardA, boardB) {
+  return !boardA.anyShipsAlive() || !boardB.anyShipsAlive();
+}
 
-//   let humanPlayer = Player(humanBoard);
-//   let AIPlayer = AIPlayer(cpuBoard);
+function determineStatus(boardA, boardB) {
+  if (!boardA.anyShipsAlive()) {
+    return "B";
+  } else if (!boardB.anyShipsAlive()) {
+    return "A";
+  } else {
+    return null;
+  }
+}
 
-//   return {};
-// }
+function singlePlayerGame() {
+  const humanBoard = Gameboard();
+  const aiBoard = Gameboard();
+
+  const standardShips = [Ship(2), Ship(2), Ship(3), Ship(4), Ship(5)];
+
+  humanBoard.populate([...standardShips]);
+  aiBoard.populate([...standardShips]);
+
+  const humanPlayer = Player(aiBoard);
+  const ai = aiPlayer(humanBoard);
+
+  function getHumanBoard() {
+    return humanBoard.getBoard();
+  }
+
+  function getAiBoard() {
+    return aiBoard.getBoard();
+  }
+
+  function takeTurn(y, x) {
+    humanPlayer.takeTurn(y, x);
+    ai.takeTurn();
+  }
+
+  return {
+    getHumanBoard,
+    getAiBoard,
+    takeTurn,
+  };
+}
 
 function autoGame() {
   let boardOne = Gameboard();
@@ -21,8 +57,8 @@ function autoGame() {
   boardOne.populate([...standardShips]);
   boardTwo.populate([...standardShips]);
 
-  let playerOne = AIPlayer(boardTwo);
-  let playerTwo = AIPlayer(boardOne);
+  let playerOne = aiPlayer(boardTwo);
+  let playerTwo = aiPlayer(boardOne);
 
   function play() {
     while (!isGameOver(boardOne, boardTwo)) {
@@ -41,18 +77,4 @@ function autoGame() {
   };
 }
 
-function isGameOver(boardA, boardB) {
-  return !boardA.anyShipsAlive() || !boardB.anyShipsAlive();
-}
-
-function determineStatus(boardA, boardB) {
-  if (!boardA.anyShipsAlive()) {
-    return "B";
-  } else if (!boardB.anyShipsAlive()) {
-    return "A";
-  } else {
-    return null;
-  }
-}
-
-export { autoGame };
+export { autoGame, singlePlayerGame };

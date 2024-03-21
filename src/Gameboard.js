@@ -10,7 +10,13 @@ function Gameboard() {
   }
 
   function getBoard() {
-    return [...board];
+    return board.map((row) => [...row]);
+  }
+
+  function getHiddenBoard() {
+    return board
+      .map((row) => row)
+      .map((cell) => (typeof cell === "number" ? null : cell));
   }
 
   function placementValid(ship, y, x, orientation) {
@@ -38,7 +44,7 @@ function Gameboard() {
         [nextShipId]: ship,
       };
 
-      let shipLength = ship.getLength();
+      const shipLength = ship.getLength();
 
       if (orientation === "V") {
         for (let i = y; i < y + shipLength; i++) {
@@ -93,6 +99,7 @@ function Gameboard() {
 
   return {
     getBoard,
+    getHiddenBoard,
     placeShip,
     populate,
     receiveAttack,

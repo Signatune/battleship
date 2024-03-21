@@ -10,11 +10,11 @@ function generateRandomMove(attackedSpaces) {
   return [potentialYCoord, potentialXCoord];
 }
 
-function AIPlayer(enemyBoard) {
-  let attackedSpaces = new Set();
+function aiPlayer(enemyBoard) {
+  const attackedSpaces = new Set();
 
   function takeTurn() {
-    let attackCoords = generateRandomMove(attackedSpaces);
+    const attackCoords = generateRandomMove(attackedSpaces);
 
     attackedSpaces.add(attackCoords);
 
@@ -36,4 +36,4 @@ function Player(enemyBoard) {
   };
 }
 
-export { AIPlayer, Player };
+export { aiPlayer, Player };

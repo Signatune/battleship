@@ -9,6 +9,20 @@ describe("Gameboard", () => {
     expect(board.getBoard()[0].length).toBe(10);
   });
 
+  describe("getHiddenBoard", () => {
+    test("should return the board as the enemy player would see it", () => {
+      const board = Gameboard();
+
+      board.populate([Ship(2), Ship(3)]);
+
+      expect(
+        board
+          .getHiddenBoard()
+          .map((row) => !row.some((cell) => typeof cell === "number")),
+      ).toBeTruthy();
+    });
+  });
+
   describe("placeShip", () => {
     let board;
     let ship;
