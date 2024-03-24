@@ -97,6 +97,16 @@ function Gameboard() {
       .reduce((acc, ship) => acc + (ship.isSunk() ? 0 : 1), 0);
   }
 
+  function getShipRoster() {
+    return Object.entries(shipRoster).reduce(
+      (prev, current) => ({
+        ...prev,
+        [current[0]]: { ...current[1] },
+      }),
+      {},
+    );
+  }
+
   return {
     getBoard,
     getHiddenBoard,
@@ -105,6 +115,7 @@ function Gameboard() {
     receiveAttack,
     anyShipsAlive,
     numShipsAlive,
+    getShipRoster,
   };
 }
 

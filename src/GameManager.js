@@ -32,8 +32,16 @@ function singlePlayerGame() {
     return humanBoard.getBoard();
   }
 
+  function getHumanRoster() {
+    return humanBoard.getShipRoster();
+  }
+
   function getAiBoard() {
     return aiBoard.getBoard();
+  }
+
+  function getAiRoster() {
+    return aiBoard.getShipRoster();
   }
 
   function takeTurn(y, x) {
@@ -43,7 +51,9 @@ function singlePlayerGame() {
 
   return {
     getHumanBoard,
+    getHumanRoster,
     getAiBoard,
+    getAiRoster,
     takeTurn,
   };
 }

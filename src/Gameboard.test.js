@@ -82,6 +82,26 @@ describe("Gameboard", () => {
     });
   });
 
+  describe("getShipRoster", () => {
+    test("should return a copy of the current ship roster", () => {
+      const board = Gameboard();
+      const shipA = Ship(2);
+      const shipB = Ship(3);
+
+      board.populate([shipA, shipB]);
+
+      const roster = board.getShipRoster();
+      const copiedShipA = roster[1];
+      const copiedShipB = roster[2];
+
+      expect(Object.entries(roster).length).toBe(2);
+      expect(copiedShipA === shipA).toBeFalsy();
+      expect(copiedShipB === shipB).toBeFalsy();
+      expect(copiedShipA).toMatchObject(shipA);
+      expect(copiedShipB).toMatchObject(shipB);
+    });
+  });
+
   describe("populate", () => {
     let board;
     let ships;
