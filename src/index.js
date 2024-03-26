@@ -3,8 +3,38 @@ import { singlePlayerGame } from "./GameManager";
 
 const enemyBoard = document.querySelector(".enemy-board");
 const playerBoard = document.querySelector(".player-board");
+const enemyRoster = document.querySelector(".enemy-area > .roster");
+const playerRoster = document.querySelector(".player-area > .roster");
 
-let game = singlePlayerGame();
+const game = singlePlayerGame();
+
+function updatePlayerRoster() {
+  playerRoster.replaceChildren(
+    ...Object.entries(game.getHumanRoster())
+      .map((entry) => entry[1])
+      .map((ship) => {
+        const shipEl = document.createElement("p");
+
+        shipEl.textContent = `${ship.getHits()} / ${ship.getLength()}`;
+
+        return shipEl;
+      }),
+  );
+}
+
+function updateEnemyRoster() {
+  enemyRoster.replaceChildren(
+    ...Object.entries(game.getAiRoster())
+      .map((entry) => entry[1])
+      .map((ship) => {
+        const shipEl = document.createElement("p");
+
+        shipEl.textContent = `${ship.getHits()} / ${ship.getLength()}`;
+
+        return shipEl;
+      }),
+  );
+}
 
 function updateBoardDisplay() {
   enemyBoard.replaceChildren();
@@ -47,6 +77,9 @@ function updateBoardDisplay() {
       enemyBoard.appendChild(square);
     }
   }
+
+  updatePlayerRoster();
+  updateEnemyRoster();
 }
 
 updateBoardDisplay();
