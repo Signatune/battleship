@@ -20,10 +20,10 @@ function singlePlayerGame() {
   const humanBoard = Gameboard();
   const aiBoard = Gameboard();
 
-  const standardShips = [Ship(2), Ship(2), Ship(3), Ship(4), Ship(5)];
+  // const standardShips = [Ship(2), Ship(2), Ship(3), Ship(4), Ship(5)];
 
-  humanBoard.populate([...standardShips]);
-  aiBoard.populate([...standardShips]);
+  humanBoard.populate([Ship(2), Ship(2), Ship(3), Ship(4), Ship(5)]);
+  aiBoard.populate([Ship(2), Ship(2), Ship(3), Ship(4), Ship(5)]);
 
   const humanPlayer = Player(aiBoard);
   const ai = aiPlayer(humanBoard);
@@ -62,10 +62,10 @@ function autoGame() {
   let boardOne = Gameboard();
   let boardTwo = Gameboard();
 
-  const standardShips = [Ship(2), Ship(2), Ship(3), Ship(4), Ship(5)];
+  // const standardShips = [Ship(2), Ship(2), Ship(3), Ship(4), Ship(5)];
 
-  boardOne.populate([...standardShips]);
-  boardTwo.populate([...standardShips]);
+  boardOne.populate([Ship(2), Ship(2), Ship(3), Ship(4), Ship(5)]);
+  boardTwo.populate([Ship(2), Ship(2), Ship(3), Ship(4), Ship(5)]);
 
   let playerOne = aiPlayer(boardTwo);
   let playerTwo = aiPlayer(boardOne);
