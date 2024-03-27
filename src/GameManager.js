@@ -19,6 +19,7 @@ function determineStatus(boardA, boardB) {
 function singlePlayerGame() {
   const humanBoard = Gameboard();
   const aiBoard = Gameboard();
+  let winner = null;
 
   // const standardShips = [Ship(2), Ship(2), Ship(3), Ship(4), Ship(5)];
 
@@ -45,8 +46,12 @@ function singlePlayerGame() {
   }
 
   function takeTurn(y, x) {
-    humanPlayer.takeTurn(y, x);
-    ai.takeTurn();
+    if (!winner) {
+      humanPlayer.takeTurn(y, x);
+      ai.takeTurn();
+    }
+
+    winner = determineStatus(humanBoard, aiBoard);
   }
 
   return {
@@ -55,6 +60,8 @@ function singlePlayerGame() {
     getAiBoard,
     getAiRoster,
     takeTurn,
+    isGameOver: () => isGameOver(humanBoard, aiBoard),
+    determineStatus: () => determineStatus(humanBoard, aiBoard),
   };
 }
 

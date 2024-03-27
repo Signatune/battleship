@@ -40,6 +40,14 @@ function updateEnemyRoster() {
   );
 }
 
+function updateWinner() {
+  const winnerDisplay = document.querySelector(".winner");
+
+  const winner = game.determineStatus();
+
+  winnerDisplay.textContent = winner ? winner : "None";
+}
+
 function updateBoardDisplay() {
   enemyBoard.replaceChildren();
   playerBoard.replaceChildren();
@@ -71,7 +79,7 @@ function updateBoardDisplay() {
         square.classList.add("hit");
       } else if (space === "M") {
         square.classList.add("miss");
-      } else {
+      } else if (!game.isGameOver()) {
         square.addEventListener("click", () => {
           game.takeTurn(i, j);
           updateBoardDisplay();
@@ -84,6 +92,7 @@ function updateBoardDisplay() {
 
   updatePlayerRoster();
   updateEnemyRoster();
+  updateWinner();
 }
 
 updateBoardDisplay();
