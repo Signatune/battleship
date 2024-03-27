@@ -10,12 +10,16 @@ const game = singlePlayerGame();
 
 function updatePlayerRoster() {
   playerRoster.replaceChildren(
-    ...Object.entries(game.getHumanRoster())
+    ...Object.entries(game.getAiRoster())
       .map((entry) => entry[1])
       .map((ship) => {
         const shipEl = document.createElement("p");
 
-        shipEl.textContent = `${ship.getHits()} / ${ship.getLength()}`;
+        shipEl.textContent = `${ship.getLength()}`;
+
+        if (ship.isSunk()) {
+          shipEl.classList.add("sunk");
+        }
 
         return shipEl;
       }),
@@ -24,12 +28,12 @@ function updatePlayerRoster() {
 
 function updateEnemyRoster() {
   enemyRoster.replaceChildren(
-    ...Object.entries(game.getAiRoster())
+    ...Object.entries(game.getHumanRoster())
       .map((entry) => entry[1])
       .map((ship) => {
         const shipEl = document.createElement("p");
 
-        shipEl.textContent = `${ship.getHits()} / ${ship.getLength()}`;
+        shipEl.textContent = `${ship.getLength()}`;
 
         return shipEl;
       }),
