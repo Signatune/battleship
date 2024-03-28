@@ -23,13 +23,13 @@ function Gameboard() {
     let length = ship.getLength();
 
     if (orientation === "V") {
-      if (y + length >= boardSize) return false;
-      for (let i = y; i <= y + length; i++) {
+      if (y + length > boardSize) return false;
+      for (let i = y; i <= y + length - 1; i++) {
         if (board[i][x]) return false;
       }
     } else if (orientation === "H") {
-      if (x + length >= boardSize) return false;
-      for (let i = x; i <= x + length; i++) {
+      if (x + length > boardSize) return false;
+      for (let i = x; i <= x + length - 1; i++) {
         if (board[y][i]) return false;
       }
     }

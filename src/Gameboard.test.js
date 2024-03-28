@@ -80,6 +80,13 @@ describe("Gameboard", () => {
 
       expect(board.numShipsAlive()).toBe(4);
     });
+
+    test("should be able to place a ship against the edges of the board", () => {
+      board.placeShip(Ship(2), 0, 8, "H");
+      board.placeShip(Ship(3), 7, 0, "V");
+
+      expect(board.numShipsAlive()).toBe(2);
+    });
   });
 
   describe("getShipRoster", () => {
