@@ -16,21 +16,43 @@ function determineStatus(boardA, boardB) {
   }
 }
 
-function singlePlayerGame() {
+function singlePlayerGame(settings) {
   const humanBoard = Gameboard();
   const aiBoard = Gameboard();
   let winner = null;
+  let isSetupComplete = false;
 
-  // const standardShips = [Ship(2), Ship(2), Ship(3), Ship(4), Ship(5)];
+  const ships = settings && settings.ships ? settings.ships : [2, 2, 3, 4, 5];
 
-  humanBoard.populate([Ship(2), Ship(2), Ship(3), Ship(4), Ship(5)]);
-  aiBoard.populate([Ship(2), Ship(2), Ship(3), Ship(4), Ship(5)]);
+  aiBoard.populate(ships.map((length) => Ship(length)));
+
+  if (!settings || !settings.manualPlacement) {
+    humanBoard.populate([Ship(2), Ship(2), Ship(3), Ship(4), Ship(5)]);
+    isSetupComplete = true;
+  }
+
+  function placeShip(y, x, orientation) {
+    if (!isSetupComplete) {
+      humanBoard.placeShip(
+        Ship(ships[humanBoard.numShipsAlive()]),
+        y,
+        x,
+        orientation,
+      );
+
+      isSetupComplete = humanBoard.numShipsAlive() === ships.length;
+    }
+  }
 
   const humanPlayer = Player(aiBoard);
   const ai = aiPlayer(humanBoard);
 
   function getHumanBoard() {
     return humanBoard.getBoard();
+  }
+
+  function getHumanShipsAlive() {
+    return humanBoard.numShipsAlive();
   }
 
   function getHumanRoster() {
@@ -46,7 +68,7 @@ function singlePlayerGame() {
   }
 
   function takeTurn(y, x) {
-    if (!winner) {
+    if (!winner && isSetupComplete) {
       humanPlayer.takeTurn(y, x);
       ai.takeTurn();
     }
@@ -56,9 +78,11 @@ function singlePlayerGame() {
 
   return {
     getHumanBoard,
+    getHumanShipsAlive,
     getHumanRoster,
     getAiBoard,
     getAiRoster,
+    placeShip,
     takeTurn,
     isGameOver: () => isGameOver(humanBoard, aiBoard),
     determineStatus: () => determineStatus(humanBoard, aiBoard),

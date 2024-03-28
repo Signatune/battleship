@@ -24,6 +24,40 @@ describe("GameBoardManager", () => {
       expect(game.getAiBoard().length).toBe(10);
     });
 
+    test("will allow the human player to manually place five set ships before gameplay starts when manualPlacement is true", () => {
+      const game = singlePlayerGame({ manualPlacement: true });
+
+      game.placeShip(1, 2, "V");
+      game.placeShip(5, 5, "H");
+      game.placeShip(6, 2, "H");
+      game.placeShip(7, 2, "H");
+      game.placeShip(8, 2, "H");
+
+      expect(game.getHumanShipsAlive()).toBe(5);
+    });
+
+    test("will not allow human player to place more than the set number of ships", () => {
+      const game = singlePlayerGame({ manualPlacement: true });
+
+      game.placeShip(1, 2, "V");
+      game.placeShip(5, 5, "H");
+      game.placeShip(6, 2, "H");
+      game.placeShip(7, 2, "H");
+      game.placeShip(8, 2, "H");
+      game.placeShip(9, 2, "H");
+
+      expect(game.getHumanShipsAlive()).toBe(5);
+    });
+
+    test("will not allow human player to take a turn until the set number of ships have been placed", () => {
+      const game = singlePlayerGame({ manualPlacement: true });
+
+      game.takeTurn(1, 2);
+
+      expect(game.getAiBoard()[1][2]).not.toBe("H");
+      expect(game.getAiBoard()[1][2]).not.toBe("M");
+    });
+
     test("will properly take a player's turn and then make the computer take a turn", () => {
       const game = singlePlayerGame();
       const initialHumanBoard = game.getHumanBoard();
