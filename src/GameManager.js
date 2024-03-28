@@ -77,11 +77,13 @@ function singlePlayerGame(settings) {
   }
 
   return {
+    getShipLengths: () => ships,
     getHumanBoard,
     getHumanShipsAlive,
     getHumanRoster,
     getAiBoard,
     getAiRoster,
+    isSetupComplete: () => isSetupComplete(),
     placeShip,
     takeTurn,
     isGameOver: () => isGameOver(humanBoard, aiBoard),

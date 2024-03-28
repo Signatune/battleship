@@ -6,7 +6,7 @@ const playerBoard = document.querySelector(".player-board");
 const enemyRoster = document.querySelector(".enemy-area > .roster");
 const playerRoster = document.querySelector(".player-area > .roster");
 
-const game = singlePlayerGame();
+const game = singlePlayerGame({ manualPlacement: true });
 
 function updatePlayerRoster() {
   playerRoster.replaceChildren(
@@ -95,4 +95,34 @@ function updateBoardDisplay() {
   updateWinner();
 }
 
-updateBoardDisplay();
+function updatePlacementDisplay() {
+  playerBoard.replaceChildren();
+
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      const space = game.getHumanBoard()[i][j];
+      const square = document.createElement("button");
+
+      if (typeof space === "number") {
+        square.classList.add("ship");
+        square.textContent = space;
+      } else {
+        square.addEventListener("click", () => {
+          game.placeShip(i, j, "H");
+
+          if (game.getHumanShipsAlive() < game.getShipLengths().length) {
+            updatePlacementDisplay();
+          } else {
+            updateBoardDisplay();
+          }
+        });
+      }
+
+      playerBoard.appendChild(square);
+    }
+  }
+}
+
+updatePlacementDisplay();
+
+// updateBoardDisplay();
