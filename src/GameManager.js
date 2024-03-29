@@ -78,6 +78,7 @@ function singlePlayerGame(settings) {
 
   return {
     getShipLengths: () => ships,
+    getNextShipLength: () => ships[humanBoard.numShipsAlive()],
     getHumanBoard,
     getHumanShipsAlive,
     getHumanRoster,

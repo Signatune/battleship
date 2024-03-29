@@ -19,7 +19,7 @@ function generateHighlightedGrid(length, y, x, orientation) {
     return highlights.map((row, rowIndex) =>
       row.map(
         (column, columnIndex) =>
-          columnIndex === x && rowIndex >= y && rowIndex <= y + length,
+          columnIndex === x && rowIndex >= y && rowIndex < y + length,
       ),
     );
   }
@@ -129,7 +129,12 @@ function updatePlacementDisplay() {
         });
       } else {
         square.addEventListener("mouseover", () => {
-          highlights = generateHighlightedGrid(2, i, j, "V");
+          highlights = generateHighlightedGrid(
+            game.getNextShipLength(),
+            i,
+            j,
+            "V",
+          );
           updatePlacementDisplay();
         });
       }
