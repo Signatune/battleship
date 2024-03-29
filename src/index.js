@@ -8,6 +8,23 @@ const playerRoster = document.querySelector(".player-area > .roster");
 
 const game = singlePlayerGame({ manualPlacement: true });
 
+function generateBlankHighlightsGrid() {
+  return new Array(10).fill(false).map(() => new Array(10).fill(false));
+}
+
+let highlights = generateBlankHighlightsGrid();
+
+function generateHighlightedGrid(length, y, x, orientation) {
+  if (orientation === "V") {
+    return highlights.map((row, rowIndex) =>
+      row.map(
+        (column, columnIndex) =>
+          columnIndex === x && rowIndex >= y && rowIndex <= y + length,
+      ),
+    );
+  }
+}
+
 function updatePlayerRoster() {
   playerRoster.replaceChildren(
     ...Object.entries(game.getAiRoster())
@@ -103,12 +120,26 @@ function updatePlacementDisplay() {
       const space = game.getHumanBoard()[i][j];
       const square = document.createElement("button");
 
+      if (highlights[i][j]) {
+        square.classList.add("highlighted");
+
+        square.addEventListener("mouseout", () => {
+          highlights = generateBlankHighlightsGrid();
+          updatePlacementDisplay();
+        });
+      } else {
+        square.addEventListener("mouseover", () => {
+          highlights = generateHighlightedGrid(2, i, j, "V");
+          updatePlacementDisplay();
+        });
+      }
+
       if (typeof space === "number") {
         square.classList.add("ship");
         square.textContent = space;
       } else {
         square.addEventListener("click", () => {
-          game.placeShip(i, j, "H");
+          game.placeShip(i, j, "V");
 
           if (game.getHumanShipsAlive() < game.getShipLengths().length) {
             updatePlacementDisplay();

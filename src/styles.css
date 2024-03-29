@@ -31,6 +31,10 @@
   color: white;
 }
 
+.board > button.highlighted {
+  background: purple;
+}
+
 .roster {
   display: flex;
   justify-content: space-around;
