@@ -7,6 +7,11 @@ const enemyRoster = document.querySelector(".enemy-area > .roster");
 const playerRoster = document.querySelector(".player-area > .roster");
 
 const game = singlePlayerGame({ manualPlacement: true });
+let placementOrientation = "V";
+
+document.querySelector(".orientation-toggle").addEventListener("click", () => {
+  placementOrientation = placementOrientation === "V" ? "H" : "V";
+});
 
 function generateBlankHighlightsGrid() {
   return new Array(10).fill(false).map(() => new Array(10).fill(false));
@@ -20,6 +25,13 @@ function generateHighlightedGrid(length, y, x, orientation) {
       row.map(
         (column, columnIndex) =>
           columnIndex === x && rowIndex >= y && rowIndex < y + length,
+      ),
+    );
+  } else if (orientation === "H") {
+    return highlights.map((row, rowIndex) =>
+      row.map(
+        (column, columnIndex) =>
+          rowIndex === y && columnIndex >= x && columnIndex < x + length,
       ),
     );
   }
@@ -133,7 +145,7 @@ function updatePlacementDisplay() {
             game.getNextShipLength(),
             i,
             j,
-            "V",
+            placementOrientation,
           );
           updatePlacementDisplay();
         });
@@ -144,7 +156,7 @@ function updatePlacementDisplay() {
         square.textContent = space;
       } else {
         square.addEventListener("click", () => {
-          game.placeShip(i, j, "V");
+          game.placeShip(i, j, placementOrientation);
 
           if (game.getHumanShipsAlive() < game.getShipLengths().length) {
             updatePlacementDisplay();
